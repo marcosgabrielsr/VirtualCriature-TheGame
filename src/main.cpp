@@ -118,7 +118,7 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
 //- Função que desenha a criatura virtual segundo seu stágio de evolução
 void drawCriature(Adafruit_PCD8544 &display, Criature &criature,const unsigned char* stages[]){
     if (criature.nivel < 16)
-        display.drawBitmap(15, 0, stages[0], 68, 48, BLACK);
+        display.drawBitmap(15, 0, chinchomon_sprite, 68, 48, BLACK);
     
     else if (criature.nivel < 36)
         display.drawBitmap(15, 0, stages[1], 68, 48, BLACK);
