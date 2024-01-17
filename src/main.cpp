@@ -46,9 +46,6 @@ const char games[3][MAX_TITLE] = {"BombDrop", "RandomMath", "Sair"};
 Criature criature;
 
 void setup(){
-    //Inicializando comunicação serial
-    Serial.begin(9600);
-
     //Definindo pino do led com saída e o inicializando como desligado
     pinMode(led, OUTPUT);
     digitalWrite(led, LOW);

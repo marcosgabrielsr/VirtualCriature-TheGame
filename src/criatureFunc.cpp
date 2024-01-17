@@ -2,7 +2,7 @@
 #include "config.h"
 
 //Função chamada quando uma comida é entregue à criatura
-bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
+bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch (cursor){
             case 0:
@@ -23,7 +23,7 @@ bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnL, PushButton
 }
 
 //Função chamada quando alguma opção do menu de configurações é selecionada
-bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
+bool criatureConfig(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch(cursor){
             case 0:
@@ -41,15 +41,15 @@ bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnL, PushBut
 }
 
 //Função chamada quando o menu de jogos for acessado
-bool playGame(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
+bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch (cursor){
             case 0:
-                Serial.println("BombDrop");
+                gameBbD(display, criature, btnL, btnX, btnR);
             break;
 
             case 1:
-                Serial.println("RandomMath");
+                
             break;
 
             case 2:

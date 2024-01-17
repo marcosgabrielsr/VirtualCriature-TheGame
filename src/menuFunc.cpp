@@ -33,7 +33,7 @@ int8_t navegation(PushButton &buttonL, PushButton &buttonR, const int8_t size, i
 }
 
 //Função que desenha no display as opções e a opção selecionada pelo usuário
-void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushButton &buttonL, PushButton &buttonX, PushButton &buttonR, const char options[][MAX_TITLE], const int size, bool (*func)(int8_t, Criature &, PushButton &, PushButton &, PushButton &)){
+void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushButton &buttonL, PushButton &buttonX, PushButton &buttonR, const char options[][MAX_TITLE], const int size, bool (*func)(Adafruit_PCD8544 &, int8_t, Criature &, PushButton &, PushButton &, PushButton &)){
     int8_t begin = 0, end = 0, cursor = 0; // Variáveis que guardam o primeiro item a aparecer, último item e opção atual do cursor do usuário
     bool rigth = true;
 
@@ -67,7 +67,7 @@ void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushBu
             }
         }
 
-        rigth = func(cursor, criature, buttonL, buttonX, buttonR);
+        rigth = func(display, cursor, criature, buttonL, buttonX, buttonR);
 
         //Atualizando o display
         display.display();

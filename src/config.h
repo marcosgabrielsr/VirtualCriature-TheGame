@@ -33,18 +33,21 @@ struct Criature {
 void menuTitle(Adafruit_PCD8544 &display, char* title);
 
 //Função que desenha no display as opções e a opção selecionada pelo usuário
-void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushButton &buttonL, PushButton &buttonX, PushButton &buttonR, const char options[][MAX_TITLE], const int size, bool (*func)(int8_t, Criature &, PushButton &, PushButton &, PushButton &));
+void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushButton &buttonL, PushButton &buttonX, PushButton &buttonR, const char options[][MAX_TITLE], const int size, bool (*func)(Adafruit_PCD8544 &, int8_t, Criature &, PushButton &, PushButton &, PushButton &));
 
 //Função que desenha o menu para visualição dos status da criatura
 void menuStatus(Adafruit_PCD8544 &display, char* title, Criature cratiure, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
 //Função chamada quando uma comida é entregue à criatura
-bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
 //Função chamada quando alguma opção do menu de configurações é selecionada
-bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+bool criatureConfig(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
 //Função chamada quando o menu de jogos for acessado
-bool playGame(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+
+//Função principal que executa o jogo BombDrop
+void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
 #endif // CONFIG_H
