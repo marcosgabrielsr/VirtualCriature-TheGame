@@ -2,7 +2,7 @@
 #include "config.h"
 
 //Função chamada quando uma comida é entregue à criatura
-bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnX){
+bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch (cursor){
             case 0:
@@ -23,7 +23,7 @@ bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnX){
 }
 
 //Função chamada quando alguma opção do menu de configurações é selecionada
-bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnX){
+bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch(cursor){
             case 0:
@@ -41,7 +41,7 @@ bool criatureConfig(int8_t cursor, Criature &criature, PushButton &btnX){
 }
 
 //Função chamada quando o menu de jogos for acessado
-bool playGame(int8_t cursor, Criature &criature, PushButton &btnX){
+bool playGame(int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(btnX.clickButton()){
         switch (cursor){
             case 0:
