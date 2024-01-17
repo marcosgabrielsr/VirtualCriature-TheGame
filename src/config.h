@@ -20,6 +20,7 @@ struct Criature {
     uint8_t nivel;
     uint8_t humor;
     uint8_t fome;
+    uint8_t energia;
     unsigned int exp;
 
     //Configurações do jogo
@@ -35,7 +36,7 @@ void menuTitle(Adafruit_PCD8544 &display, char* title);
 void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushButton &buttonL, PushButton &buttonX, PushButton &buttonR, const char options[][MAX_TITLE], const int size, bool (*func)(int8_t, Criature &, PushButton &));
 
 //Função que desenha o menu para visualição dos status da criatura
-void menuStatus(Adafruit_PCD8544 &display, PushButton &btnX, char* title);
+void menuStatus(Adafruit_PCD8544 &display, char* title, Criature cratiure, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
 //Função chamada quando uma comida é entregue à criatura
 bool criatureEat(int8_t cursor, Criature &criature, PushButton &btnX);

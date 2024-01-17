@@ -59,8 +59,9 @@ void setup(){
     display.clearDisplay();
     display.display();
 
+    criature.nome = "Chinchomon";
     criature.nivel = 1;
-    criature.saude = 20;
+    criature.saude = 100;
     criature.pinBackLight = led;
 }
 
@@ -94,10 +95,10 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
         //Imprimindo o sprite do menu lateral no display
         display.drawBitmap(0, 0, sprite[cursor], 15, 48, BLACK);
 
-    if(buttonX.clickButton()){
+    if(btnX.clickButton()){
         switch (cursor){
             case 0:
-                menuStatus(display, btnX, "Status");
+                menuStatus(display, "Status", criature, btnL, btnX, btnR);
             break;
 
             case 1:
