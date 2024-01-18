@@ -50,6 +50,8 @@ void setup(){
     pinMode(led, OUTPUT);
     digitalWrite(led, LOW);
 
+    randomSeed(analogRead(A0));
+
     //Inicializando o display
     display.begin();
     display.setContrast(57);

@@ -49,7 +49,7 @@ bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, Push
             break;
 
             case 1:
-                
+                gameRM(display, criature, btnL, btnX, btnR);
             break;
 
             case 2:

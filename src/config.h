@@ -50,4 +50,7 @@ bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, Push
 //Função principal que executa o jogo BombDrop
 void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
 
+//Função responsável por desenhar a tela inicial do jogo
+void gameRM(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+
 #endif // CONFIG_H
