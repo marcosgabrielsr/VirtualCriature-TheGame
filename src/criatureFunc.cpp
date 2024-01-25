@@ -30,8 +30,12 @@ bool criatureConfig(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature
                 criature.backLight = !criature.backLight;
                 digitalWrite(criature.pinBackLight, criature.backLight);
             break;
-        
+
             case 1:
+
+            break;
+
+            case 2:
                 return false;
             break;
         }
@@ -59,4 +63,17 @@ bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, Push
     }
 
     return true;
+}
+
+//Função que carrega os dados da memória EEPROM do arduino para uma struct
+void loadData(uint8_t address, Criature &criature){
+    EEPROM.get(address, criature);
+
+    if(criature.nivel == 0){
+        criature.nivel = 1;
+        criature.fome = 100;
+        criature.energia = 100;
+        criature.humor = 100;
+        criature.saude = 100;
+    }
 }

@@ -16,6 +16,9 @@
 #define pinButtonX 9
 #define pinButtonR 8
 
+//====== Endereço da EEPROM ======
+#define address 1
+
 //====== Criando objetos ======
 //- Display Nokia 5110:
 Adafruit_PCD8544 display = Adafruit_PCD8544(pinCLK, pinDIN, pinDC, pinCE, pinRST);
@@ -28,17 +31,20 @@ PushButton buttonR(pinButtonR, 170);
 //====== Declarando Funções ======
 //- Função para navegação e impressão do menu lateral no display
 void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], PushButton &buttonL, PushButton &buttonR, PushButton &ButtonX, Criature &criature);
-//- Função que desenha a criatura virtual segundo seu stágio de evolução
-void drawCriature(Adafruit_PCD8544 &display, Criature &criature,const unsigned char* stages[]);
+//- Função que determina o nome e retorna o estágio de evolução segundo o nível da criatura
+uint8_t setNameAndStage(Criature &criature);
 
-//Declarando variáveis
-const unsigned char* stages[3] = {stage_1, 0,stage_3};
+//====== Declarando variáveis ======
+//- Estágios do tamagotchi
+const unsigned char* stages[3] = {tokomon, 0, salandermon};
+//- Variável para armazenar o estágio atual do tamagothci
+uint8_t current_stage;
 
 //====== Opções dos Menus ======
 //- Menu para comidas
 const char foods[3][MAX_TITLE] = {"Brownie", "Suco", "Sair"};
 //- Menu para configurações
-const char configs[2][MAX_TITLE] = {"BackLight", "Sair"};
+const char configs[3][MAX_TITLE] = {"BackLight", "Salvar", "Sair"};
 //- Menu para jogos
 const char games[3][MAX_TITLE] = {"BombDrop", "RandomMath", "Sair"};
 
@@ -46,10 +52,18 @@ const char games[3][MAX_TITLE] = {"BombDrop", "RandomMath", "Sair"};
 Criature criature;
 
 void setup(){
-    //Definindo pino do led com saída e o inicializando como desligado
-    pinMode(led, OUTPUT);
-    digitalWrite(led, LOW);
+    //Carregando dados salvos da memória EEPROM da criatura
+    loadData(address, criature);
 
+    //Passando o endereço da EEPROM e o pino do led do display para a criatura
+    criature.addressEEPROM = address;
+    criature.pinBackLight = led;
+
+    //Definindo pino do led com saída e o inicializando como desligado
+    pinMode(criature.pinBackLight, OUTPUT);
+    digitalWrite(criature.pinBackLight, criature.backLight);
+
+    //Setando uma nova semente para a função random
     randomSeed(analogRead(A0));
 
     //Inicializando o display
@@ -58,19 +72,19 @@ void setup(){
     display.clearDisplay();
     display.display();
 
-    criature.nome = "Chinchomon";
-    criature.nivel = 1;
-    criature.saude = 100;
-    criature.pinBackLight = led;
+    //Setando o estágio atual do tamagotchi
+    current_stage = setNameAndStage(criature);
 }
 
 void loop(){
     //Limpando display 
     display.clearDisplay();
 
-    drawSideMenu(display,  allIconsSideMenu, buttonL, buttonR, buttonX, criature);
+    //Desenhando a criatura segundo seu estágio
+    display.drawBitmap(15, 0, stages[current_stage], 68, 48, BLACK);
 
-    drawCriature(display, criature, stages);
+    //Desenhando o menu lateral
+    drawSideMenu(display,  allIconsSideMenu, buttonL, buttonR, buttonX, criature);
 
     //Atualizando display
     display.display();
@@ -109,20 +123,20 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
             break;
 
             case 3:
-                menuShow(display, criature, "Configs", btnL, btnX, btnR, configs, 2, criatureConfig);
+                menuShow(display, criature, "Configs", btnL, btnX, btnR, configs, 3, criatureConfig);
             break;
         }
     }
 }
 
-//- Função que desenha a criatura virtual segundo seu stágio de evolução
-void drawCriature(Adafruit_PCD8544 &display, Criature &criature,const unsigned char* stages[]){
-    if (criature.nivel < 16)
-        display.drawBitmap(15, 0, chinchomon_sprite, 68, 48, BLACK);
+//- Função que determina o nome e retorna o estágio de evolução segundo o nível da criatura
+uint8_t setNameAndStage(Criature &criature){
+    uint8_t current_stage;
     
-    else if (criature.nivel < 36)
-        display.drawBitmap(15, 0, stages[1], 68, 48, BLACK);
-    
-    else
-        display.drawBitmap(0, 0, stages[2], 84, 48, BLACK);
+    if(criature.nivel < 16){
+        criature.nome = "Tokomon";
+        current_stage = 0;
+    }
+
+    return current_stage;
 }

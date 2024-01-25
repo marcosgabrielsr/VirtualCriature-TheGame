@@ -10,6 +10,7 @@
 #include <Arduino.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_PCD8544.h>
+#include <EEPROM.h>
 #include "PushButton.hpp"
 
 //====== Structs ======
@@ -24,6 +25,7 @@ struct Criature {
     unsigned int exp;
 
     //Configurações do jogo
+    uint8_t addressEEPROM;
     uint8_t pinBackLight;
     bool backLight;
 };
@@ -37,6 +39,9 @@ void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushBu
 
 //Função que desenha o menu para visualição dos status da criatura
 void menuStatus(Adafruit_PCD8544 &display, char* title, Criature cratiure, PushButton &btnL, PushButton &btnX, PushButton &btnR);
+
+//Função que carrega os dados da memória EEPROM do arduino para uma struct
+void loadData(uint8_t address, Criature &criature);
 
 //Função chamada quando uma comida é entregue à criatura
 bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);
