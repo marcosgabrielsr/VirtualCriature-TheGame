@@ -70,10 +70,24 @@ void loadData(uint8_t address, Criature &criature){
     EEPROM.get(address, criature);
 
     if(criature.nivel == 0){
+        //Inicializa a criatura estando acordada
+        criature.dormindo = false;
+
+        //Setando configurações iniciais
         criature.nivel = 1;
-        criature.fome = 100;
-        criature.energia = 100;
-        criature.humor = 100;
+        criature.fome = 50;
+        criature.energia = 70;
+        criature.humor = 40;
         criature.saude = 100;
     }
+}
+
+//Função para decrementação dos status da criatura
+void decrementation(Criature &criature){
+    //Variáveis para controle e verificação de intervalos de tempo
+    static unsigned long timer1 = 0;
+
+    //Verificando se a criatura está dormindo
+    if(criature.dormindo && ((timer1 - millis()) > 120000))
+        criature.energia += 10;
 }

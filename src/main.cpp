@@ -80,6 +80,9 @@ void loop(){
     //Limpando display 
     display.clearDisplay();
 
+    //Atualizando os status da criatura com a passagem de tempo
+    decrementation(criature);
+
     //Desenhando a criatura segundo seu estágio
     display.drawBitmap(15, 0, stages[current_stage], 68, 48, BLACK);
 

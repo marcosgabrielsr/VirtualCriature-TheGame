@@ -17,6 +17,7 @@
 struct Criature {
     //Dados para status da criatura
     const char* nome;
+    bool dormindo;
     uint8_t saude;
     uint8_t nivel;
     uint8_t humor;
@@ -42,6 +43,9 @@ void menuStatus(Adafruit_PCD8544 &display, char* title, Criature cratiure, PushB
 
 //Função que carrega os dados da memória EEPROM do arduino para uma struct
 void loadData(uint8_t address, Criature &criature);
+
+//Função para decrementação dos status da criatura
+void decrementation(Criature &criature);
 
 //Função chamada quando uma comida é entregue à criatura
 bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR);

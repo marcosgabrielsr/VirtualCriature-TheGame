@@ -67,7 +67,8 @@ void menuShow(Adafruit_PCD8544 &display, Criature &criature, char* title, PushBu
             }
         }
 
-        rigth = func(display, cursor, criature, buttonL, buttonX, buttonR);
+        rigth = func(display, cursor, criature, buttonL, buttonX, buttonR);             //Verificando se o menu continua sendo executado
+        decrementation(criature);                                                       //decrementando status da criatura
 
         //Atualizando o display
         display.display();
