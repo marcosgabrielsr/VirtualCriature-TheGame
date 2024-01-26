@@ -21,7 +21,7 @@ struct Criature {
     uint8_t saude;
     uint8_t nivel;
     uint8_t humor;
-    uint8_t fome;
+    uint8_t comida;
     uint8_t energia;
     unsigned int exp;
 
