@@ -36,7 +36,7 @@ uint8_t setNameAndStage(Criature &criature);
 
 //====== Declarando variáveis ======
 //- Estágios do tamagotchi
-const unsigned char* stages[3] = {tokomon, 0, salandermon};
+const unsigned char* stages[3] = {tokomon, shantomon, salandermon};
 //- Variável para armazenar o estágio atual do tamagothci
 uint8_t current_stage;
 
@@ -81,7 +81,7 @@ void loop(){
     display.clearDisplay();
 
     //Atualizando os status da criatura com a passagem de tempo
-    decrementation(criature);
+    updateStatus(criature);
 
     //Desenhando a criatura segundo seu estágio
     display.drawBitmap(15, 0, stages[current_stage], 68, 48, BLACK);
@@ -105,7 +105,8 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
     if(buttonR.clickButton() && cursor < 3)
         cursor += 1;
 
-    if(cursor == 0 && criature.saude < 25)
+    //Verifica se algum dos status principais estão abaixo de 25%
+    if(cursor == 0 && (criature.saude < 25 || criature.comida < 25 || criature.humor < 25 || criature.energia < 25))
         display.drawBitmap(0, 0, stats_icon_atention, 15, 48, BLACK);
     else
         //Imprimindo o sprite do menu lateral no display
@@ -139,6 +140,14 @@ uint8_t setNameAndStage(Criature &criature){
     if(criature.nivel < 16){
         criature.nome = "Tokomon";
         current_stage = 0;
+    
+    } else if(criature.nivel < 36){
+        criature.nome = "Shantomon";
+        current_stage = 1;
+    
+    } else {
+        criature.nome = "Salandermon";
+        current_stage = 2;
     }
 
     return current_stage;

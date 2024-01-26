@@ -3,21 +3,25 @@
 
 //Função chamada quando uma comida é entregue à criatura
 bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
-    if(btnX.clickButton()){
-        switch (cursor){
-            case 0:
-                criature.comida += 6;
-            break;
-            
-            case 1:
-                criature.comida += 6;
-            break;
+    if(criature.comida < 100){
+        if(btnX.clickButton()){
+            switch (cursor){
+                case 0:
+                    criature.comida += 6;
+                break;
+                
+                case 1:
+                    criature.comida += 6;
+                break;
 
-            case 2:
-                return false;
-            break;
+                case 2:
+                    return false;
+                break;
+            }
         }
-    }
+    
+    } else
+        criature.comida = 100;
 
     return true;
 }
@@ -82,8 +86,8 @@ void loadData(uint8_t address, Criature &criature){
     }
 }
 
-//Função para decrementação dos status da criatura
-void decrementation(Criature &criature){
+//Função para atualizar os status da criatura
+void updateStatus(Criature &criature){
     //Variáveis para controle e verificação de intervalos de tempo
     static unsigned long timer1 = 0;                //Timer utilizado para dormir
     static unsigned long timer2 = 0;                //Timer utilizado para decrementar humor
@@ -92,7 +96,7 @@ void decrementation(Criature &criature){
     //Verificando se a criatura está dormindo
     if(criature.dormindo){
         //Verifica se passou 12s para incrementar a energia
-        if((millis() - timer1) > 12000){
+        if(((millis() - timer1) > 12000) && criature.energia < 100){
             criature.energia += 1;
             timer1 = millis();                      //Reinicia o timer1
         }
@@ -103,8 +107,8 @@ void decrementation(Criature &criature){
             timer2 = millis();                      //Reinicia o timer2
         }
 
-        //Verifica se passou 20s para decrementar a taxa de comida
-        if((millis() - timer3) > 20000){
+        //Verifica se passou 80s para decrementar a taxa de comida
+        if(((millis() - timer3) > 80000) && criature.comida > 0){
             criature.comida -= 1;
             timer3 = millis();
         }
@@ -117,8 +121,8 @@ void decrementation(Criature &criature){
             timer2 = millis();                      //Reinicia o timer2
         }
 
-        //Verifica se passou 9s para decrementar a taxa de comida
-        if((millis() - timer3) > 9000){
+        //Verifica se passou 60s para decrementar a taxa de comida
+        if(((millis() - timer3) > 60000) && criature.comida > 0){
             criature.comida -= 1;
             timer3 = millis();
         }
