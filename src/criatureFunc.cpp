@@ -1,16 +1,41 @@
 //Incluindo biblioteca com as configurações do projeto
 #include "config.h"
 
+//Função que carrega os dados da memória EEPROM do arduino para uma struct
+void loadData(uint8_t address, Criature &criature){
+    EEPROM.get(address, criature);
+
+    if(criature.nivel == 0){
+        //Inicializa a criatura estando acordada
+        criature.dormindo = false;
+
+        //Setando configurações iniciais
+        criature.nivel = 1;
+        criature.comida = 40;
+        criature.energia = 7;
+        criature.humor = 40;
+        criature.saude = 100;
+    }
+}
+
+//Função que regula quanto de xp o ganhador vai receber ao dar comida à criatura
+void xptoEat(Criature &criature){
+    if(criature.comida < 50)
+        criature.exp += (criature.nivel * 0.6);
+}
+
 //Função chamada quando uma comida é entregue à criatura
 bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     if(criature.comida < 100){
         if(btnX.clickButton()){
             switch (cursor){
                 case 0:
+                    xptoEat(criature);
                     criature.comida += 6;
                 break;
                 
                 case 1:
+                    xptoEat(criature);
                     criature.comida += 6;
                 break;
 
@@ -67,23 +92,6 @@ bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, Push
     }
 
     return true;
-}
-
-//Função que carrega os dados da memória EEPROM do arduino para uma struct
-void loadData(uint8_t address, Criature &criature){
-    EEPROM.get(address, criature);
-
-    if(criature.nivel == 0){
-        //Inicializa a criatura estando acordada
-        criature.dormindo = false;
-
-        //Setando configurações iniciais
-        criature.nivel = 1;
-        criature.comida = 50;
-        criature.energia = 70;
-        criature.humor = 40;
-        criature.saude = 100;
-    }
 }
 
 //Função para atualizar os status da criatura

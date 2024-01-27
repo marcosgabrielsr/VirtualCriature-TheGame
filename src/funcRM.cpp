@@ -2,7 +2,7 @@
 #include "config.h"
 
 //Função que desenha a tela inicial do jogo
-void initScreen(Adafruit_PCD8544 &display, PushButton &btnX, bool *start){
+void initScreen(Adafruit_PCD8544 &display, PushButton &btnX, bool *start, Criature &criature){
     //Variável para controle de tempo do intervalo de aparaição da mensagem de start
     static bool print = true;
     static unsigned long t = 0;
@@ -33,10 +33,15 @@ void initScreen(Adafruit_PCD8544 &display, PushButton &btnX, bool *start){
     //Escrevendo a mensagem
     display.setCursor(3, 37);
     display.setTextSize(1);
-    (print) ? display.println("(x) to start!") : display.println();
+    
+    //Verificando a energia atual da criatura para ver se ele pode ou não jogar
+    if(criature.energia >= 10)
+        (print) ? display.println("(x) to start!") : display.println();
+    else
+        (print) ? display.println("No energy") : display.println();
 
     //Verifica o clique do botão para iniciar o jogo
-    if(btnX.clickButton())
+    if(btnX.clickButton() && criature.energia >= 10)
         *start = !(*start);
 
     //Atualizando display
@@ -107,7 +112,7 @@ void drawRectEquation(Adafruit_PCD8544 &display, String equation){
 }
 
 //Função que desenha a tela do jogo
-void gameScreen(Adafruit_PCD8544 &display, PushButton &btnL, PushButton &btnX, PushButton &btnR){
+int gameScreen(Adafruit_PCD8544 &display, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     //Variáveis para controle de tempo
     unsigned long t = millis();
     int result, pontos = 0;
@@ -200,25 +205,34 @@ void gameScreen(Adafruit_PCD8544 &display, PushButton &btnL, PushButton &btnX, P
         //Atualizando display
         display.display();
     }
+
+    return pontos;
 }
 
 //Função responsável por desenhar a tela inicial do jogo
 void gameRM(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, PushButton &btnX, PushButton &btnR){
     bool start = false;
     bool player = true;
+    int pontos = 0;
 
     while(player){
         if (!start){
             //Chamando função que desenha a tela inicial
-            initScreen(display, btnX, &start);
+            initScreen(display, btnX, &start, criature);
 
             //Verifica se o botão L ou botão R foi clicado para sair da tela do jogo
             if(btnL.clickButton() || btnR.clickButton())
                 player = false;
 
         } else {
-            //Chamando função que desenha a tela do jogo
-            gameScreen(display, btnL, btnX, btnR);
+            //Consumindo 10 pontos de energia para o jogo
+            criature.energia -= 10;
+
+            //Chamando função que desenha a tela do jogo e somando os pontos para a experiência da criatura
+            pontos = gameScreen(display, btnL, btnX, btnR);
+            criature.exp += pontos;
+
+            //Atribuindo o valor false a start para voltar a tela inicial
             start = false;
         }
     }

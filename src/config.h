@@ -17,13 +17,17 @@
 struct Criature {
     //Dados para status da criatura
     const char* nome;
+
+    //Configurações para defininir nível e experiência 
+    float nivel;
+    float exp;
+
+    //Configurações de status
     bool dormindo;
     uint8_t saude;
-    uint8_t nivel;
     uint8_t humor;
     uint8_t comida;
     uint8_t energia;
-    unsigned int exp;
 
     //Configurações do jogo
     uint8_t addressEEPROM;

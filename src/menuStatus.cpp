@@ -24,7 +24,7 @@ void menuStatus(Adafruit_PCD8544 &display, char* title, Criature criature, PushB
             //Caso seja 0 imprime a primeira tela
             case 0:
                 display.print("Nome:"); display.println(criature.nome);
-                display.print("Nivel:"); display.println(criature.nivel);
+                display.print("Nivel:"); display.println(int(criature.nivel));
                 display.print("Exp:"); display.print(criature.exp); display.print("/"); display.println(10 * criature.nivel);
             break;
 
