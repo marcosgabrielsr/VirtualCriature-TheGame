@@ -220,6 +220,9 @@ void gameRM(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pus
             //Chamando função que desenha a tela inicial
             initScreen(display, btnX, &start, criature);
 
+            //Atualizando stauts da criatura
+            updateStatus(criature);
+
             //Verifica se o botão L ou botão R foi clicado para sair da tela do jogo
             if(btnL.clickButton() || btnR.clickButton())
                 player = false;
@@ -230,7 +233,22 @@ void gameRM(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pus
 
             //Chamando função que desenha a tela do jogo e somando os pontos para a experiência da criatura
             pontos = gameScreen(display, btnL, btnX, btnR);
-            criature.exp += pontos;
+            
+            //Código para o total de experiência ganho segundo o humor
+            if(criature.humor < 30)
+                criature.exp += (pontos * 1.2);
+            
+            else if(criature.humor < 60)
+                criature.exp += (pontos * 0.9);
+            
+            else
+                criature.exp += (pontos * 0.6);
+            
+            //Após terminar o jogo atualizamos o humor da criatura
+            if(criature.humor < 100)
+                criature.humor += (pontos * 1.3);
+            else
+                criature.humor = 100;
 
             //Atribuindo o valor false a start para voltar a tela inicial
             start = false;

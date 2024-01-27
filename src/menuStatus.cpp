@@ -30,7 +30,6 @@ void menuStatus(Adafruit_PCD8544 &display, char* title, Criature criature, PushB
 
             //Caso seja 1 imprime a segunda tela
             case 1:
-                display.print("Saude:"); display.print(criature.saude); display.println("%");
                 display.print("Comida:"); display.print(criature.comida); display.println("%");
                 display.print("Humor:"); display.print(criature.humor); display.println("%");
                 display.print("Energia:"); display.print(criature.energia); display.println("%");

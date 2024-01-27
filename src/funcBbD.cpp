@@ -3,7 +3,7 @@
 #include "spritesBbD.h" //Importando sprites do BombDrop
 
 //Função que imprime na tela a tela inicial e a pontuação máxima
-void drawInitScreen(Adafruit_PCD8544 &display, PushButton &button, int16_t record, bool &start){
+void drawInitScreen(Adafruit_PCD8544 &display, PushButton &button, int16_t record, bool &start, Criature &criature){
     //Variáveis para controle da alternância do aviso de clique do botão
     static bool blink = true;
     static unsigned long time = 0;
@@ -38,11 +38,15 @@ void drawInitScreen(Adafruit_PCD8544 &display, PushButton &button, int16_t recor
 
     //Configura e escreve a mensagem caso blink seja verdadeiro
     display.setCursor(8, 64);
-    blink ? display.print("(X) to start!") : display.print("");
+    if(criature.energia >= 10)
+        blink ? display.print("(X) to start!") : display.print("");
+    else
+        blink ? display.print("No energy") : display.print("");
 
     //Altera star para true caso botão seja clicado
-    if(button.clickButton()){
+    if(button.clickButton() && criature.energia >= 10){
         start = true;
+        criature.energia -= 10;
 
         //Uma pausa de 350ms para início do jogo
         delay(350);
@@ -212,8 +216,12 @@ void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pu
         //Verifica se start é falso
         if(start == false){
             //Chama a função que desenha a tela inicial dos jogos
-            drawInitScreen(display, btnX, record, start);
+            drawInitScreen(display, btnX, record, start, criature);
 
+            //Atualizando stauts da criatura
+            updateStatus(criature);
+
+            //Verificando se um dos botões L ou R foi clicado
             if(btnL.clickButton() || btnR.clickButton())
                 player = false;
 
@@ -249,6 +257,22 @@ void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pu
                 points = 0;
                 start = false;
                 interval = 40;
+
+                //Código para o total de experiência ganho segundo o humor
+                if(criature.humor < 30)
+                    criature.exp += (points * 1.2);
+            
+                else if(criature.humor < 60)
+                    criature.exp += (points * 0.9);
+            
+                else
+                    criature.exp += (points * 0.6);
+
+                //Após terminar o jogo atualizamos o humor da criatura
+                if(criature.humor < 100)
+                    criature.humor += (points * 1.3);
+                else
+                    criature.humor = 100;
             }
         }
 

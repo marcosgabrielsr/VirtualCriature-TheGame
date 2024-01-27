@@ -71,12 +71,12 @@ void setup(){
     display.setContrast(57);
     display.clearDisplay();
     display.display();
-
-    //Setando o estágio atual do tamagotchi
-    current_stage = setNameAndStage(criature);
 }
 
 void loop(){
+    //Setando o estágio atual do tamagotchi
+    current_stage = setNameAndStage(criature);
+
     //Limpando display 
     display.clearDisplay();
 
@@ -106,7 +106,7 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
         cursor += 1;
 
     //Verifica se algum dos status principais estão abaixo de 25%
-    if(cursor == 0 && (criature.saude < 25 || criature.comida < 25 || criature.humor < 25 || criature.energia < 25))
+    if(cursor == 0 && (criature.comida < 25 || criature.humor < 25 || criature.energia < 25))
         display.drawBitmap(0, 0, stats_icon_atention, 15, 48, BLACK);
     else
         //Imprimindo o sprite do menu lateral no display

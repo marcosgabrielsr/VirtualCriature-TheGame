@@ -12,16 +12,9 @@ void loadData(uint8_t address, Criature &criature){
         //Setando configurações iniciais
         criature.nivel = 1;
         criature.comida = 40;
-        criature.energia = 7;
+        criature.energia = 70;
         criature.humor = 40;
-        criature.saude = 100;
     }
-}
-
-//Função que regula quanto de xp o ganhador vai receber ao dar comida à criatura
-void xptoEat(Criature &criature){
-    if(criature.comida < 50)
-        criature.exp += (criature.nivel * 0.6);
 }
 
 //Função chamada quando uma comida é entregue à criatura
@@ -30,12 +23,12 @@ bool criatureEat(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, P
         if(btnX.clickButton()){
             switch (cursor){
                 case 0:
-                    xptoEat(criature);
+                    criature.exp += (criature.nivel * 0.6);
                     criature.comida += 6;
                 break;
                 
                 case 1:
-                    xptoEat(criature);
+                    criature.exp += (criature.nivel * 0.6);
                     criature.comida += 6;
                 break;
 
@@ -134,5 +127,11 @@ void updateStatus(Criature &criature){
             criature.comida -= 1;
             timer3 = millis();
         }
+    }
+
+    //Código para atualização do nível reset do total de experiência
+    if(criature.exp >= (criature.nivel * 10)){
+        criature.exp = criature.exp - (criature.nivel * 10);
+        criature.nivel++;
     }
 }

@@ -24,7 +24,6 @@ struct Criature {
 
     //Configurações de status
     bool dormindo;
-    uint8_t saude;
     uint8_t humor;
     uint8_t comida;
     uint8_t energia;
