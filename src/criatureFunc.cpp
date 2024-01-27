@@ -49,12 +49,14 @@ bool criatureConfig(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature
     if(btnX.clickButton()){
         switch(cursor){
             case 0:
+                //Alterar o estado da back light
                 criature.backLight = !criature.backLight;
                 digitalWrite(criature.pinBackLight, criature.backLight);
             break;
 
             case 1:
-
+                //Salvar os dados
+                EEPROM.put(criature.addressEEPROM, criature);
             break;
 
             case 2:

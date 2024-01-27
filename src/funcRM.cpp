@@ -139,7 +139,10 @@ int gameScreen(Adafruit_PCD8544 &display, PushButton &btnL, PushButton &btnX, Pu
 
         //Armazenando resultado e a expressão matemática
         if(equation == " "){
-            equation = getResultAndEquation(&result);
+            //Código para evitar que haja resultados maiores que 100
+            do{
+                equation = getResultAndEquation(&result);
+            } while(result > 100);
             
             //Código para impedir que haja duas opções com o resultado correto
             int8_t i = 0;

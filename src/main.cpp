@@ -98,16 +98,24 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
     //Variável para armazenar o cursor
     static uint8_t cursor = 0;
 
-    //Código para navegação do menu lateral
-    if(buttonL.clickButton() && cursor > 0)
-        cursor -= 1;
-    
-    if(buttonR.clickButton() && cursor < 3)
-        cursor += 1;
+    //Verifica se a criatura está dormindo para navegação no menu lateral
+    if(!criature.dormindo){
+        //Código para navegação do menu lateral
+        if(buttonL.clickButton() && cursor > 0)
+            cursor -= 1;
+        
+        if(buttonR.clickButton() && cursor < 4)
+            cursor += 1;
+    }
 
     //Verifica se algum dos status principais estão abaixo de 25%
     if(cursor == 0 && (criature.comida < 25 || criature.humor < 25 || criature.energia < 25))
         display.drawBitmap(0, 0, stats_icon_atention, 15, 48, BLACK);
+    
+    //Verifica a posição do cursor e se a criatura está dormindo
+    else if(criature.dormindo)
+        display.drawBitmap(0, 0, sleeping_icon, 15, 48, BLACK);
+
     else
         //Imprimindo o sprite do menu lateral no display
         display.drawBitmap(0, 0, sprite[cursor], 15, 48, BLACK);
@@ -119,14 +127,18 @@ void drawSideMenu(Adafruit_PCD8544 &display, const unsigned char* sprite[], Push
             break;
 
             case 1:
-                menuShow(display, criature, "Comidas", btnL, btnX, btnR, foods, 3, criatureEat);
+                criature.dormindo = !criature.dormindo;
             break;
 
             case 2:
-                menuShow(display, criature, "Jogos", btnL, btnX, btnR, games, 3, playGame);
+                menuShow(display, criature, "Comidas", btnL, btnX, btnR, foods, 3, criatureEat);
             break;
 
             case 3:
+                menuShow(display, criature, "Jogos", btnL, btnX, btnR, games, 3, playGame);
+            break;
+
+            case 4:
                 menuShow(display, criature, "Configs", btnL, btnX, btnR, configs, 3, criatureConfig);
             break;
         }

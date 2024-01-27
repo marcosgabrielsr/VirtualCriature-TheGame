@@ -251,12 +251,7 @@ void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pu
             } else {
                 //Atualiza o record e reiniciliza os pontos, as quantidade de vidas e o tempo de queda dos objetos
                 if(points > record)
-                record = points;
-
-                life = 3;
-                points = 0;
-                start = false;
-                interval = 40;
+                    record = points;
 
                 //Código para o total de experiência ganho segundo o humor
                 if(criature.humor < 30)
@@ -273,6 +268,11 @@ void gameBbD(Adafruit_PCD8544 &display, Criature &criature, PushButton &btnL, Pu
                     criature.humor += (points * 1.3);
                 else
                     criature.humor = 100;
+
+                life = 3;
+                points = 0;
+                start = false;
+                interval = 40;
             }
         }
 
