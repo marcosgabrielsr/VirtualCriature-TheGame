@@ -73,10 +73,12 @@ bool playGame(Adafruit_PCD8544 &display, int8_t cursor, Criature &criature, Push
     if(btnX.clickButton()){
         switch (cursor){
             case 0:
+                //Chamando função do bomb drop
                 gameBbD(display, criature, btnL, btnX, btnR);
             break;
 
             case 1:
+                //Chamando função do random math
                 gameRM(display, criature, btnL, btnX, btnR);
             break;
 
@@ -118,8 +120,14 @@ void updateStatus(Criature &criature){
     }
     //Caso contrário
     else{
+        //Verifica se passou 315s para decrementar os pontos de energia
+        if(((millis() - timer1) > 315000) && criature.energia > 0){
+            criature.energia -= 1;
+            timer1 = millis();
+        }
+
         //Verifica se passou 426s para decrementar o humor
-        if((millis() - timer2) > 426000){
+        if(((millis() - timer2) > 426000) && criature.humor > 0){
             criature.humor -= 1;
             timer2 = millis();                      //Reinicia o timer2
         }
