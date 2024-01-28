@@ -1,7 +1,7 @@
 # VirtualCriature-TheGame
 
-Desenvolvedor: Marcos Gabriel <br>
-Data da última atualização: 27/01/2024
+**Desenvolvedor: Marcos Gabriel** <br>
+**Data da última atualização: 28/01/2024**
 
 ## Descrição:
 Este jogo é um projeto inspirado em bichinhos de estimação antigos como os tamagotchis e até alguns mais atuais como Pou. A ideia deste projeto inicialmente era apresentar um projeto divertido e interessante para aqueles que estão acabando de se inserir no mundo da programação de sistemas embarcados e ao mundo maker a partir do arduino, uma plataforma muito interessante para os iniciantes.
