@@ -10,6 +10,12 @@ Com o desenvolvimento do projeto, foram surgindo ideias de colocar menus e mini 
 
 Assim, com o passar do tempo, este projeto se tornou uma forma de você desenhar a sua própria criatura de bolso, ou seja, seu próprio bichinho virtual do jeito que você quiser e cuidar dele. Para isso é necessário criar sua a pixel art da sua criatura na resolução `68x48` e utilizar alguma ferramenta que transforme sua pixel art em um bitmap que será adicionado ao código (deixairei nas referências links para as ferramentas que eu uso).
 
+<center>
+    <img src='https://cdn.discordapp.com/attachments/1204547033265086514/1204547112826830868/home.jpeg?ex=65d520eb&is=65c2abeb&hm=7a45360fb5e7b1a18a67f4ee6b9da6e717981697d9d919ec09b7e3200f71034a&'>
+</center>
+
+**OBS**: Este projeto foi criado utilizando o PlatformIO IDE.
+
 ## Circuito Eletrônico
 <img src="https://cdn.discordapp.com/attachments/1153711382336909332/1163203943237689404/image.png?ex=653eb917&is=652c4417&hm=aafb61461d30b2c1abee0a6c10e71c59c9cdcf73e34c3c1c1630b3395ad9d880&" />
 
